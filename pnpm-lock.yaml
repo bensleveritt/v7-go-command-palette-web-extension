@@ -5,15 +5,24 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  '@playwright/test':
+    specifier: ^1.45.2
+    version: 1.45.2
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.1.1
     version: 3.1.1(svelte@4.2.18)(vite@5.3.4)
   '@tsconfig/svelte':
     specifier: ^5.0.4
     version: 5.0.4
+  '@types/node':
+    specifier: ^20.14.11
+    version: 20.14.11
   '@types/webextension-polyfill':
     specifier: ^0.10.0
     version: 0.10.7
+  dotenv:
+    specifier: ^16.4.5
+    version: 16.4.5
   svelte:
     specifier: ^4.2.18
     version: 4.2.18
@@ -28,13 +37,13 @@ devDependencies:
     version: 5.5.3
   vite:
     specifier: ^5.3.1
-    version: 5.3.4
+    version: 5.3.4(@types/node@20.14.11)
   vite-plugin-web-extension:
     specifier: ^4.1.6
-    version: 4.1.6
+    version: 4.1.6(@types/node@20.14.11)
   vitest:
     specifier: ^2.0.3
-    version: 2.0.3
+    version: 2.0.3(@types/node@20.14.11)
   webextension-polyfill:
     specifier: ^0.10.0
     version: 0.10.0
@@ -342,6 +351,14 @@ packages:
       '@jridgewell/sourcemap-codec': 1.5.0
     dev: true
 
+  /@playwright/test@1.45.2:
+    resolution: {integrity: sha512-JxG9eq92ET75EbVi3s+4sYbcG7q72ECeZNbdBlaMkGcNbiDQ4cAi8U2QP5oKkOx+1gpaiL1LDStmzCaEM1Z6fQ==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dependencies:
+      playwright: 1.45.2
+    dev: true
+
   /@pnpm/config.env-replace@1.1.0:
     resolution: {integrity: sha512-htyl8TWnKL7K/ESFa1oW2UB5lVDxuF5DpM7tBi6Hu2LNL3mWkIzNLG6N4zoCUP1lCKNxWy/3iu8mS8MvToGd6w==}
     engines: {node: '>=12.22.0'}
@@ -507,7 +524,7 @@ packages:
       '@sveltejs/vite-plugin-svelte': 3.1.1(svelte@4.2.18)(vite@5.3.4)
       debug: 4.3.5
       svelte: 4.2.18
-      vite: 5.3.4
+      vite: 5.3.4(@types/node@20.14.11)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -526,7 +543,7 @@ packages:
       magic-string: 0.30.10
       svelte: 4.2.18
       svelte-hmr: 0.16.0(svelte@4.2.18)
-      vite: 5.3.4
+      vite: 5.3.4(@types/node@20.14.11)
       vitefu: 0.2.5(vite@5.3.4)
     transitivePeerDependencies:
       - supports-color
@@ -1091,6 +1108,11 @@ packages:
       is-obj: 2.0.0
     dev: true
 
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
+    dev: true
+
   /dtrace-provider@0.8.8:
     resolution: {integrity: sha512-b7Z7cNtHPhH9EJhNNbbeqTcXB8LGFFZhq1PGgEvpeHlzd36bhbdTWoE/Ba/YguqpBSlAPKnARWhVlhunCMwfxg==}
     engines: {node: '>=0.10'}
@@ -1260,6 +1282,14 @@ packages:
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
+
+  /fsevents@2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
 
   /fsevents@2.3.3:
     resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
@@ -1971,6 +2001,22 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
+  /playwright-core@1.45.2:
+    resolution: {integrity: sha512-ha175tAWb0dTK0X4orvBIqi3jGEt701SMxMhyujxNrgd8K0Uy5wMSwwcQHtyB4om7INUkfndx02XnQ2p6dvLDw==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dev: true
+
+  /playwright@1.45.2:
+    resolution: {integrity: sha512-ReywF2t/0teRvNBpfIgh5e4wnrI/8Su8ssdo5XsQKpjxJj+jspm00jSoz9BTg91TT0c9HRjXO7LBNVrgYj9X0g==}
+    engines: {node: '>=18'}
+    hasBin: true
+    dependencies:
+      playwright-core: 1.45.2
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /postcss@8.4.39:
     resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
     engines: {node: ^10 || ^12 || >=14}
@@ -2561,7 +2607,7 @@ packages:
     hasBin: true
     dev: true
 
-  /vite-node@2.0.3:
+  /vite-node@2.0.3(@types/node@20.14.11):
     resolution: {integrity: sha512-14jzwMx7XTcMB+9BhGQyoEAmSl0eOr3nrnn+Z12WNERtOvLN+d2scbRUvyni05rT3997Bg+rZb47NyP4IQPKXg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2570,7 +2616,7 @@ packages:
       debug: 4.3.5
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.3.4
+      vite: 5.3.4(@types/node@20.14.11)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -2582,7 +2628,7 @@ packages:
       - terser
     dev: true
 
-  /vite-plugin-web-extension@4.1.6:
+  /vite-plugin-web-extension@4.1.6(@types/node@20.14.11):
     resolution: {integrity: sha512-6na2gY87AUsllZC1UE45kNpFucM+Ig/U6bVjkRK6NbqwwfDDBwFma3LM/xGekWmYoKk/+qp072jyzFYrOLF5aw==}
     engines: {node: '>=16'}
     dependencies:
@@ -2594,7 +2640,7 @@ packages:
       lodash.uniq: 4.5.0
       lodash.uniqby: 4.7.0
       md5: 2.3.0
-      vite: 5.3.4
+      vite: 5.3.4(@types/node@20.14.11)
       web-ext-run: 0.2.1
       webextension-polyfill: 0.10.0
       yaml: 2.4.5
@@ -2611,7 +2657,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /vite@5.3.4:
+  /vite@5.3.4(@types/node@20.14.11):
     resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2639,6 +2685,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.14.11
       esbuild: 0.21.5
       postcss: 8.4.39
       rollup: 4.19.0
@@ -2654,10 +2701,10 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.3.4
+      vite: 5.3.4(@types/node@20.14.11)
     dev: true
 
-  /vitest@2.0.3:
+  /vitest@2.0.3(@types/node@20.14.11):
     resolution: {integrity: sha512-o3HRvU93q6qZK4rI2JrhKyZMMuxg/JRt30E6qeQs6ueaiz5hr1cPj+Sk2kATgQzMMqsa2DiNI0TIK++1ULx8Jw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2683,6 +2730,7 @@ packages:
         optional: true
     dependencies:
       '@ampproject/remapping': 2.3.0
+      '@types/node': 20.14.11
       '@vitest/expect': 2.0.3
       '@vitest/pretty-format': 2.0.3
       '@vitest/runner': 2.0.3
@@ -2698,8 +2746,8 @@ packages:
       tinybench: 2.8.0
       tinypool: 1.0.0
       tinyrainbow: 1.2.0
-      vite: 5.3.4
-      vite-node: 2.0.3
+      vite: 5.3.4(@types/node@20.14.11)
+      vite-node: 2.0.3(@types/node@20.14.11)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
       - less

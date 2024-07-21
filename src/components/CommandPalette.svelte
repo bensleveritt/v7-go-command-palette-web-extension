@@ -67,6 +67,7 @@
       class="shadow-lg rounded-corner-8 flex flex-col"
       open
       transition:fly={{ y: 20, duration: 200 }}
+      aria-label="Command Palette"
     >
       <header class="w-full p-1">
         <div
