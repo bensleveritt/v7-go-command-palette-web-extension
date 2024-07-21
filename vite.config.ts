@@ -21,7 +21,9 @@ export default defineConfig({
       manifest: generateManifest,
       watchFilePaths: ["package.json", "manifest.json"],
       webExtConfig: {
-        startUrl: "https://go.v7labs.com/",
+        // startUrl: "https://go.v7labs.com/",
+        startUrl:
+          "chrome-extension:pnadmelgifhkooiblfmnclemejpgahfk/content.html",
         devtools: true,
       },
     }),
