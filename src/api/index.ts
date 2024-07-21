@@ -23,6 +23,10 @@ export async function createProject() {
   });
 }
 
-export function listSuggestions(workspaceId: string) {
+export function listSuggestions(
+  input: string,
+  workspaceId: string,
+  projectId: string
+) {
   return [{ label: "Create a new project", fn: createProject }];
 }

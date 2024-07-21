@@ -8,12 +8,7 @@
   let input = "";
 
   onMount(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "k" && e.metaKey) {
-        open.set(!$open);
-        listSuggestions(input, workspaceId);
-      }
-    });
+    document.addEventListener("keydown", handleKeydown);
   });
 
   const commands = [
@@ -23,6 +18,41 @@
     { label: "Export project", fn: createProject },
     { label: "Add property", fn: createProject },
   ];
+
+  // TODO: Test
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === "k" && (e.metaKey || e.ctrlKey)) handleOpen();
+    if ($open && e.key === "Escape") handleEscape();
+    if ($open && (e.key === "ArrowUp" || e.key === "ArrowDown"))
+      handleNavigation();
+  }
+
+  // TODO: Test
+  function handleOpen() {
+    open.set(!$open);
+  }
+
+  // TODO: Test
+  function handleEscape() {
+    // Clear input if it's not empty
+    if (input !== "") {
+      input = "";
+      return;
+    }
+
+    // Else close the dialog
+    open.set(false);
+  }
+
+  function handleNavigation() {
+    console.log("Navigating");
+  }
+
+  function onInput() {
+    console.log(input);
+    console.log("List suggestions");
+    console.log(listSuggestions(input, "123", "456"));
+  }
 </script>
 
 {#if $open}
@@ -33,17 +63,40 @@
     aria-labelledby="dialogTitle"
     transition:fade={{ duration: 200 }}
   >
-    <dialog class="shadow-lg" open transition:fly={{ y: 20, duration: 200 }}>
-      <header>
-        <h2 id="dialogTitle">Command Palette</h2>
-        <input type="text" bind:value={input} />
-        <button on:click={() => open.set(false)}>Close</button>
+    <dialog
+      class="shadow-lg rounded-corner-8 flex flex-col"
+      open
+      transition:fly={{ y: 20, duration: 200 }}
+    >
+      <header class="w-full p-1">
+        <div
+          class="flex bg-background-gray-subtlest rounded-corner-8 px-1.5 py-1 bg-background-transparent hover:[&amp;:not(:disabled)]:bg-background-transparent-hovered w-full"
+        >
+          <input
+            type="text"
+            on:input={onInput}
+            class="w-full bg-background-transparent px-1 py-0.5 text-sm-12px-default text-text transition-colors placeholder:text-text-subtlest aria-readonly:cursor-pointer focus:outline-none disabled:cursor-not-allowed disabled:text-text-disabled disabled:placeholder:text-text-disabled"
+            autofocus
+            placeholder="Type a command or search..."
+            aria-label="Search"
+          />
+        </div>
       </header>
 
-      <ul>
+      <div
+        role="separator"
+        aria-orientation="horizontal"
+        class="flex items-center justify-center gap-2 w-full w-full"
+      >
+        <div
+          class="rounded-corner-1 bg-background-border-subtle h-px w-full"
+        ></div>
+      </div>
+
+      <ul class="w-full p-1" role="menu">
         {#each commands as command}
-          <li>
-            <button on:click={() => command.fn()} class="w-full"
+          <li role="menuitem">
+            <button on:click={() => command.fn()} class="command w-full"
               >{command.label}</button
             >
           </li>
@@ -66,9 +119,18 @@
   dialog {
     color: var(--color-text-default);
     background: var(--color-surface-default);
-    border-radius: 8px;
     margin: auto;
-    padding: 1rem;
     position: fixed;
+    width: 320px;
+  }
+
+  li {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  button.command:hover,
+  button.command:focus {
+    background-color: var(--color-background-transparent-hovered);
   }
 </style>
