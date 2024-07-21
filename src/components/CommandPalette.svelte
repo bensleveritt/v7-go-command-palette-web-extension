@@ -2,23 +2,26 @@
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
   import { fade, fly } from "svelte/transition";
+  import { createProject, listSuggestions } from "../api";
 
   const open = writable(false);
+  let input = "";
 
   onMount(() => {
     document.addEventListener("keydown", (e) => {
       if (e.key === "k" && e.metaKey) {
         open.set(!$open);
+        listSuggestions(input, workspaceId);
       }
     });
   });
 
   const commands = [
-    "New project",
-    "Start chat",
-    "Navigate to row",
-    "Export project",
-    "Add property",
+    { label: "New project", fn: createProject },
+    { label: "Start chat", fn: createProject },
+    { label: "Navigate to row", fn: createProject },
+    { label: "Export project", fn: createProject },
+    { label: "Add property", fn: createProject },
   ];
 </script>
 
@@ -33,14 +36,16 @@
     <dialog class="shadow-lg" open transition:fly={{ y: 20, duration: 200 }}>
       <header>
         <h2 id="dialogTitle">Command Palette</h2>
-        <input type="text" />
+        <input type="text" bind:value={input} />
         <button on:click={() => open.set(false)}>Close</button>
       </header>
 
       <ul>
         {#each commands as command}
           <li>
-            <button on:click={() => console.log(command)}>{command}</button>
+            <button on:click={() => command.fn()} class="w-full"
+              >{command.label}</button
+            >
           </li>
         {/each}
       </ul>

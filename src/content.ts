@@ -1,3 +1,3 @@
-import CommandPalette from "./pages/CommandPalette.svelte";
+import CommandPalette from "./components/CommandPalette.svelte";
 
 new CommandPalette({ target: document.body });
