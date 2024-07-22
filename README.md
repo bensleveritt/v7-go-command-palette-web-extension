@@ -1,6 +1,8 @@
 # V7 Go Command Palette Chromium web extension
 
-This is a web extension built primarily for Chromium-based browsers, to add a command palette to V7 Go.
+![20240722225922](https://github.com/user-attachments/assets/5f9d6cb6-867a-480b-8c10-5f80459d26cd)
+
+A web extension built primarily for Chromium-based browsers, to add a command palette to V7 Go.
 
 The extension works by inserting a `svelte` component into the content of the running page (in this instance, just the V7 Go sub-domain), which communicates with Go via the [API](https://docs.go.v7labs.com). The visual styling for the component is predominantly carefully inherited from the hosted styles, to help the command palette feel as integrated as possible. All styles were reverse-engineered from existing components, as the stylesheet source wasn't available.
 
