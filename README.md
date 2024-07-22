@@ -42,5 +42,4 @@ To accomplish this, real login credentials need to be added to the `.env`, speci
 - [ ] Recency suggestions
 - [ ] Contextual suggestions based on Workspace and Project
 - [ ] Suggestions from LLM
-- [ ] Close palette by clicking outside
 - [ ] Get api key from logged in user session

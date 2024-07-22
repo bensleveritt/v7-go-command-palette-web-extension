@@ -51,6 +51,10 @@
       console.error(error);
     }
   }
+
+  function handleBackdropClick(e: MouseEvent) {
+    if (e.target === e.currentTarget) open.set(false);
+  }
 </script>
 
 <svelte:document on:keydown={handleKeydown} />
@@ -58,10 +62,10 @@
 {#if $open}
   <div
     class="dialog-wrapper fixed inset-0 backdrop-blur-xl"
-    aria-modal="true"
-    role="dialog"
-    aria-labelledby="dialogTitle"
     transition:fade={{ duration: 200 }}
+    on:click={handleBackdropClick}
+    role="presentation"
+    tabindex="-1"
   >
     <dialog
       class="shadow-lg rounded-corner-8 flex flex-col"
@@ -73,6 +77,7 @@
         <div
           class="flex bg-background-gray-subtlest rounded-corner-6 px-1.5 py-1 bg-background-transparent hover:[&amp;:not(:disabled)]:bg-background-transparent-hovered w-full"
         >
+          <!-- svelte-ignore a11y-autofocus -->
           <input
             type="text"
             bind:value={$input}
