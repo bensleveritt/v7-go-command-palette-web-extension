@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import { derived, writable } from "svelte/store";
   import { fade, fly } from "svelte/transition";
   import { commandOptions } from "../api";
@@ -10,10 +9,7 @@
   const commands = derived(input, ($input) =>
     filterSuggestions($input, commandOptions)
   );
-
-  onMount(() => {
-    document.addEventListener("keydown", handleKeydown);
-  });
+  let workspaceId = "";
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === "k" && (e.metaKey || e.ctrlKey)) handleOpen();
@@ -38,10 +34,10 @@
   }
 
   // TODO: Test
-  function handleNavigation() {
-    console.log("Navigating");
-  }
+  function handleNavigation() {}
 </script>
+
+<svelte:document on:keydown={handleKeydown} />
 
 {#if $open}
   <div
@@ -59,7 +55,7 @@
     >
       <header class="w-full p-1">
         <div
-          class="flex bg-background-gray-subtlest rounded-corner-8 px-1.5 py-1 bg-background-transparent hover:[&amp;:not(:disabled)]:bg-background-transparent-hovered w-full"
+          class="flex bg-background-gray-subtlest rounded-corner-6 px-1.5 py-1 bg-background-transparent hover:[&amp;:not(:disabled)]:bg-background-transparent-hovered w-full"
         >
           <input
             type="text"
@@ -84,8 +80,10 @@
 
       <ul class="w-full p-1" role="menu">
         {#each $commands as command}
-          <li role="menuitem">
-            <button on:click={() => command.fn()} class="command w-full"
+          <li role="menuitem" class="">
+            <button
+              on:click={() => command.fn({ workspaceId })}
+              class="command w-full flex rounded-corner-6 justify-start p-2"
               >{command.label}</button
             >
           </li>

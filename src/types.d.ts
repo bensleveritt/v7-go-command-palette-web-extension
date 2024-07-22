@@ -1,4 +1,4 @@
 export type Command = {
   label: string;
-  fn: () => void;
+  fn: (payload: any) => void;
 };

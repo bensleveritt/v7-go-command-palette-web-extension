@@ -15,8 +15,11 @@ export async function getWorkspaces() {
   return fetch(`${apiUrl}/workspaces`, options);
 }
 
-export async function createProject(name, workspaceId) {
-  return fetch(`${apiUrl}/workspaces/${workspaceId}/projects`, {
+export async function createProject(payload: {
+  name: string;
+  workspaceId: string;
+}) {
+  return fetch(`${apiUrl}/workspaces/${payload.workspaceId}/projects`, {
     headers: {
       ...options.headers,
       "content-type": "application/json",
