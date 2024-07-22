@@ -124,6 +124,7 @@
     background: var(--color-surface-default);
     margin: auto;
     position: fixed;
+    top: 33vh;
     width: 320px;
   }
 

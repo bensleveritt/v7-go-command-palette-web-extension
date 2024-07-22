@@ -15,7 +15,6 @@ export async function getWorkspaces() {
 }
 
 async function createProject(payload: { name: string; workspaceId: string }) {
-  console.log("Create project", payload.name, payload.workspaceId);
   return fetch(`${apiUrl}/workspaces/${payload.workspaceId}/projects`, {
     headers: {
       ...options.headers,
@@ -48,4 +47,12 @@ export const commandOptions: Command[] = [
   { label: "Navigate to row", fn: navigateToRow },
   { label: "Export project", fn: exportProject },
   { label: "Add property", fn: addProperty },
+  {
+    label: "New project in workspace",
+    fn: async () => console.log("New project in workspace"),
+  },
+  {
+    label: "New workspace",
+    fn: async () => console.log("New workspace"),
+  },
 ];
