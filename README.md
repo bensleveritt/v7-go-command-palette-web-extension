@@ -43,3 +43,5 @@ To accomplish this, real login credentials need to be added to the `.env`, speci
 - [ ] Contextual suggestions based on Workspace and Project
 - [ ] Suggestions from LLM
 - [ ] Get api key from logged in user session
+- [ ] Select suggestion when filtered down to one
+- [ ] Add additional panes for collecting further information
