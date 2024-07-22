@@ -5,15 +5,15 @@ import { filterSuggestions } from "./filterSuggestions";
 test("should return suggestions", () => {
   const testCommand1: Command = {
     label: "test1",
-    fn: () => {},
+    fn: async () => {},
   };
   const testCommand2: Command = {
     label: "another command",
-    fn: () => {},
+    fn: async () => {},
   };
   const testCommand3: Command = {
     label: "test2",
-    fn: () => {},
+    fn: async () => {},
   };
 
   const mockCommandList: Command[] = [testCommand1, testCommand2, testCommand3];

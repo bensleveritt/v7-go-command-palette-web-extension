@@ -2,7 +2,9 @@
   import { derived, writable } from "svelte/store";
   import { fade, fly } from "svelte/transition";
   import { commandOptions } from "../api";
+  import type { Command } from "../types";
   import { filterSuggestions } from "../utils/filterSuggestions";
+  import { getContextFromURL } from "../utils/getContextFromURL";
 
   const open = writable(false);
   const input = writable("");
@@ -20,6 +22,8 @@
 
   function handleOpen() {
     open.set(!$open);
+    const { workspaceId: wId } = getContextFromURL(window.location.href);
+    workspaceId = wId ?? "";
   }
 
   function handleEscape() {
@@ -34,7 +38,19 @@
   }
 
   // TODO: Test
-  function handleNavigation() {}
+  function handleNavigation() {
+    // Pressing down should move the focus to the next item
+    // Pressing up should move the focus to the previous item
+  }
+
+  async function handleCommandExecute(command: Command) {
+    try {
+      await command.fn({ ...command.payload, workspaceId });
+      open.set(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 </script>
 
 <svelte:document on:keydown={handleKeydown} />
@@ -82,7 +98,7 @@
         {#each $commands as command}
           <li role="menuitem" class="">
             <button
-              on:click={() => command.fn({ workspaceId })}
+              on:click={() => handleCommandExecute(command)}
               class="command w-full flex rounded-corner-6 justify-start p-2"
               >{command.label}</button
             >
