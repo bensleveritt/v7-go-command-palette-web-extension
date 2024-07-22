@@ -3,7 +3,7 @@
   import { derived, writable } from "svelte/store";
   import { fade, fly } from "svelte/transition";
   import { commandOptions } from "../api";
-  import { filterSuggestions } from "../api/filterSuggestions";
+  import { filterSuggestions } from "../utils/filterSuggestions";
 
   const open = writable(false);
   const input = writable("");

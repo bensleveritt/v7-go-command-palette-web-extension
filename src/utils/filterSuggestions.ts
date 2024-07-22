@@ -1,5 +1,5 @@
+import { commandOptions } from "../api/index";
 import type { Command } from "../types";
-import { commandOptions } from "./index";
 
 // Filter commands based on the input
 export function filterSuggestions(
