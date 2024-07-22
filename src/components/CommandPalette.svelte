@@ -1,25 +1,20 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { writable } from "svelte/store";
+  import { derived, writable } from "svelte/store";
   import { fade, fly } from "svelte/transition";
-  import { createProject, listSuggestions } from "../api";
+  import { commandOptions } from "../api";
+  import { filterSuggestions } from "../api/filterSuggestions";
 
   const open = writable(false);
-  let input = "";
+  const input = writable("");
+  const commands = derived(input, ($input) =>
+    filterSuggestions($input, commandOptions)
+  );
 
   onMount(() => {
     document.addEventListener("keydown", handleKeydown);
   });
 
-  const commands = [
-    { label: "New project", fn: createProject },
-    { label: "Start chat", fn: createProject },
-    { label: "Navigate to row", fn: createProject },
-    { label: "Export project", fn: createProject },
-    { label: "Add property", fn: createProject },
-  ];
-
-  // TODO: Test
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === "k" && (e.metaKey || e.ctrlKey)) handleOpen();
     if ($open && e.key === "Escape") handleEscape();
@@ -27,16 +22,14 @@
       handleNavigation();
   }
 
-  // TODO: Test
   function handleOpen() {
     open.set(!$open);
   }
 
-  // TODO: Test
   function handleEscape() {
     // Clear input if it's not empty
-    if (input !== "") {
-      input = "";
+    if ($input !== "") {
+      input.set("");
       return;
     }
 
@@ -44,14 +37,9 @@
     open.set(false);
   }
 
+  // TODO: Test
   function handleNavigation() {
     console.log("Navigating");
-  }
-
-  function onInput() {
-    console.log(input);
-    console.log("List suggestions");
-    console.log(listSuggestions(input, "123", "456"));
   }
 </script>
 
@@ -75,7 +63,7 @@
         >
           <input
             type="text"
-            on:input={onInput}
+            bind:value={$input}
             class="w-full bg-background-transparent px-1 py-0.5 text-sm-12px-default text-text transition-colors placeholder:text-text-subtlest aria-readonly:cursor-pointer focus:outline-none disabled:cursor-not-allowed disabled:text-text-disabled disabled:placeholder:text-text-disabled"
             autofocus
             placeholder="Type a command or search..."
@@ -95,7 +83,7 @@
       </div>
 
       <ul class="w-full p-1" role="menu">
-        {#each commands as command}
+        {#each $commands as command}
           <li role="menuitem">
             <button on:click={() => command.fn()} class="command w-full"
               >{command.label}</button
