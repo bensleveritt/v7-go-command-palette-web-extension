@@ -6,18 +6,22 @@
   import { filterSuggestions } from "../utils/filterSuggestions";
   import { getContextFromURL } from "../utils/getContextFromURL";
 
+  let inputEl: HTMLInputElement;
+  let suggestionsEl: HTMLDivElement;
+
   const open = writable(false);
   const input = writable("");
   const commands = derived(input, ($input) =>
     filterSuggestions($input, commandOptions)
   );
   let workspaceId = "";
+  let focusedIndex = -1; // Nothing selected
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === "k" && (e.metaKey || e.ctrlKey)) handleOpen();
     if ($open && e.key === "Escape") handleEscape();
     if ($open && (e.key === "ArrowUp" || e.key === "ArrowDown"))
-      handleNavigation();
+      handleNavigation(e);
   }
 
   function handleOpen() {
@@ -37,10 +41,36 @@
     open.set(false);
   }
 
-  // TODO: Test
-  function handleNavigation() {
-    // Pressing down should move the focus to the next item
-    // Pressing up should move the focus to the previous item
+  function handleNavigation(e: KeyboardEvent) {
+    e.preventDefault();
+    const activeEl = document.activeElement;
+
+    switch (e.key) {
+      case "ArrowDown":
+        // If the search input is focused, move focus to the suggestions
+        if (focusedIndex === -1) {
+          (suggestionsEl?.firstElementChild as HTMLElement)?.focus();
+          focusedIndex = 0; // Move focus to the first item
+          return;
+        }
+
+        // Otherwise, move focus to the next item
+        (activeEl?.nextElementSibling as HTMLElement)?.focus();
+        focusedIndex = (focusedIndex + 1) % $commands.length; // Move focus down
+        break;
+      case "ArrowUp":
+        // If focusedIndex is first item, focus on the search input
+        if (focusedIndex === 0) {
+          inputEl.focus();
+          focusedIndex = -1; // Move focus to the last item
+          return;
+        }
+
+        // Otherwise, move focus to the previous item
+        (activeEl?.previousElementSibling as HTMLElement)?.focus();
+        focusedIndex = (focusedIndex - 1 + $commands.length) % $commands.length; // Move focus up
+        break;
+    }
   }
 
   async function handleCommandExecute(command: Command) {
@@ -85,6 +115,7 @@
             autofocus
             placeholder="Type a command or search..."
             aria-label="Search"
+            bind:this={inputEl}
           />
         </div>
       </header>
@@ -99,17 +130,24 @@
         ></div>
       </div>
 
-      <ul class="w-full p-1" role="menu">
-        {#each $commands as command}
-          <li role="menuitem" class="">
-            <button
-              on:click={() => handleCommandExecute(command)}
-              class="command w-full flex rounded-corner-6 justify-start p-2"
-              >{command.label}</button
-            >
-          </li>
+      {#if $commands.length === 0}
+        <div class="p-2 text-text-subtlest">No commands found</div>
+      {/if}
+      <div
+        class="w-full p-1"
+        aria-label="Suggestions"
+        role="menu"
+        bind:this={suggestionsEl}
+      >
+        {#each $commands as command, index}
+          <button
+            on:click={() => handleCommandExecute(command)}
+            class="command w-full flex rounded-corner-6 justify-start p-2"
+            tabindex={index === focusedIndex ? 0 : -1}
+            role="menuitem">{command.label}</button
+          >
         {/each}
-      </ul>
+      </div>
     </dialog>
   </div>
 {/if}
@@ -131,11 +169,6 @@
     position: fixed;
     top: 33vh;
     width: 320px;
-  }
-
-  li {
-    display: flex;
-    justify-content: flex-start;
   }
 
   button.command:hover,

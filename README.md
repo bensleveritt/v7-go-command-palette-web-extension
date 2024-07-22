@@ -38,7 +38,6 @@ To accomplish this, real login credentials need to be added to the `.env`, speci
 
 - [ ] More tests (particularly around integration and interactions)
 - [ ] Configure API url and key from web extension options
-- [ ] Navigate suggestions with arrow keys
 - [ ] Recency suggestions
 - [ ] Contextual suggestions based on Workspace and Project
 - [ ] Suggestions from LLM
