@@ -14,7 +14,7 @@ The built files go into `/dist`, where [these instructions](https://developer.ch
 
 ## Development
 
-Uses the `vite-plugin-web-extension` to develop and build the web extension.
+Uses the `vite-plugin-web-extension` to develop and build the web extension. Copy `.env.example` to `.env` and replace the `<API_KEY>` with one that can access the workspace.
 
 > `$ pnpm dev` will start a the `vite` development server and [`web-ext` tool](https://github.com/mozilla/web-ext), loading the unpackaged extension into a new Chromium instance. The vite plugin is still fairly new, and things like hot module reloading (and even auto-refresh on watch) don't work. Manual refreshing works well enough.
 
@@ -37,7 +37,10 @@ To accomplish this, real login credentials need to be added to the `.env`, speci
 ## Further explorations and tasks
 
 - [ ] More tests (particularly around integration and interactions)
+- [ ] Configure API url and key from web extension options
+- [ ] Navigate suggestions with arrow keys
 - [ ] Recency suggestions
 - [ ] Contextual suggestions based on Workspace and Project
 - [ ] Suggestions from LLM
 - [ ] Close palette by clicking outside
+- [ ] Get api key from logged in user session

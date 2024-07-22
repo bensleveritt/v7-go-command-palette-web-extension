@@ -8,7 +8,7 @@ const options = {
   },
 };
 
-const apiUrl = "https://go.v7labs.com/api";
+const apiUrl = import.meta.env.VITE_V7_GO_API_URL;
 
 export async function getWorkspaces() {
   return fetch(`${apiUrl}/workspaces`, options);
